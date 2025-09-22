@@ -1,22 +1,22 @@
 pipeline {
     agent any
 
-    tools {
-        jdk 'JDK_HOME'
-        maven 'MAVEN_HOME'
-        nodejs 'NODE_HOME'
-    }
-
     environment {
         BACKEND_DIR = 'BACKEND'
         FRONTEND_DIR = 'FRONTEND'
-        GIT_REPO = 'https://github.com/VaibhavBatchu/taskmanagmentsystem.git'  // Replace with your repo URL
+        GIT_REPO = 'https://github.com/VaibhavBatchu/taskmanagmentsystem.git'
 
         TOMCAT_URL = 'http://184.72.122.226:9090/manager/text'
-        TOMCAT_CREDENTIALS = credentials('tomcat-creds')  // Uses your stored creds
+        TOMCAT_CREDENTIALS = credentials('tomcat-creds')
 
         BACKEND_WAR = 'backendtaskmanagmentsystem.war'
         FRONTEND_WAR = 'frontendtaskmanagmentsystem.war'
+
+        // Manual tool paths (adjust if your local installs are different)
+        JAVA_HOME = 'C:\\Program Files\\Java\\jdk-17'  // Update to your JDK 17 path
+        MAVEN_HOME = 'C:\\apache-maven-3.9.9'          // Update to your Maven path
+        NODE_HOME = 'C:\\Program Files\\nodejs'        // Update to your Node.js path
+        PATH = "${JAVA_HOME}\\bin;${MAVEN_HOME}\\bin;${NODE_HOME};${env.PATH}"
     }
 
     stages {
@@ -38,13 +38,13 @@ pipeline {
         stage('Package Frontend as WAR') {
             steps {
                 dir("${env.FRONTEND_DIR}") {
-                    bat """
-                        mkdir frontend_war_dir\\WEB-INF
+                    bat '''
+                        if not exist frontend_war_dir mkdir frontend_war_dir\\WEB-INF
                         xcopy /E /I dist frontend_war_dir
                         cd frontend_war_dir
-                        jar -cvf ..\\..\\${env.FRONTEND_WAR} *
+                        jar -cvf ..\\..\\%FRONTEND_WAR% *
                         cd ..\\..
-                    """
+                    '''
                 }
             }
         }
@@ -53,28 +53,28 @@ pipeline {
             steps {
                 dir("${env.BACKEND_DIR}") {
                     bat 'mvn clean package'
-                    bat "copy target\\*.war ..\\${env.BACKEND_WAR}"
+                    bat "copy target\\*.war ..\\%BACKEND_WAR%"
                 }
             }
         }
 
         stage('Deploy Backend to Tomcat (/backendtaskmanagmentsystem)') {
             steps {
-                bat """
+                bat '''
                     curl -u %TOMCAT_CREDENTIALS_USR%:%TOMCAT_CREDENTIALS_PSW% ^
-                      --upload-file ${env.BACKEND_WAR} ^
-                      "${env.TOMCAT_URL}/deploy?path=/backendtaskmanagmentsystem&update=true"
-                """
+                      --upload-file %BACKEND_WAR% ^
+                      "%TOMCAT_URL%/deploy?path=/backendtaskmanagmentsystem&update=true"
+                '''
             }
         }
 
         stage('Deploy Frontend to Tomcat (/frontendtaskmanagmentsystem)') {
             steps {
-                bat """
+                bat '''
                     curl -u %TOMCAT_CREDENTIALS_USR%:%TOMCAT_CREDENTIALS_PSW% ^
-                      --upload-file ${env.FRONTEND_WAR} ^
-                      "${env.TOMCAT_URL}/deploy?path=/frontendtaskmanagmentsystem&update=true"
-                """
+                      --upload-file %FRONTEND_WAR% ^
+                      "%TOMCAT_URL%/deploy?path=/frontendtaskmanagmentsystem&update=true"
+                '''
             }
         }
     }
@@ -89,9 +89,8 @@ pipeline {
             echo "❌ Deployment Failed! Check logs."
         }
         always {
-            // Clean up WAR files
-            bat "if exist ${env.BACKEND_WAR} del ${env.BACKEND_WAR}"
-            bat "if exist ${env.FRONTEND_WAR} del ${env.FRONTEND_WAR}"
+            bat "if exist %BACKEND_WAR% del %BACKEND_WAR%"
+            bat "if exist %FRONTEND_WAR% del %FRONTEND_WAR%"
         }
     }
 }
