@@ -1,0 +1,98 @@
+/* ===== Global Reset ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* ===== Sidebar Navigation ===== */
+nav {
+  background-color: #f7f9fc;
+  width: 200px;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  border-right: 1px solid #e0e0e0;
+  display: flex;
+  flex-direction: column;
+  padding-top: 80px; /* space for header */
+}
+
+nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+nav li {
+  margin-bottom: 8px;
+}
+
+nav a {
+  display: block;
+  padding: 12px 20px;
+  text-decoration: none;
+  color: #333;
+  font-size: 15px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  border-left: 3px solid transparent;
+}
+
+nav a:hover {
+  background-color: #eaf1fb;
+  color: #357abd;
+  border-left: 3px solid #357abd;
+  font-weight: 600;
+}
+
+/* Dropdown Styling */
+.dropdown-content {
+  display: none;
+  flex-direction: column;
+  background-color: #f0f4fa;
+  margin-top: 5px;
+  border-left: 3px solid #357abd;
+}
+
+.dropdown:hover .dropdown-content {
+  display: flex;
+}
+
+.dropdown-content a {
+  padding-left: 35px;
+  font-size: 14px;
+  color: #444;
+}
+
+/* ===== Content Area ===== */
+.content {
+  margin-left: 200px;
+  padding: 80px 25px 25px;
+  background-color: #fafafa;
+  min-height: 100vh;
+}
+
+/* ===== Logout Button ===== */
+.logoutButton {
+  background: #ff4d4d;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 18px;
+  font-size: 14px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.logoutButton:hover {
+  background: #e63939;
+  box-shadow: 0 3px 8px rgba(230, 57, 57, 0.4);
+}
+
+.logoutButton:active {
+  transform: scale(0.96);
+}

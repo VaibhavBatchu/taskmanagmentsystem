@@ -1,0 +1,32 @@
+/* ===== Header ===== */
+.app-header {
+  position: fixed;
+  top: 0;
+  left: 200px; /* Adjust for sidebar */
+  width: calc(100% - 200px);
+  height: 60px;
+  background: linear-gradient(90deg, #4a90e2, #357abd);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  z-index: 1000;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+}
+
+.app-logo {
+  height: 40px;
+  margin-right: 12px;
+}
+
+.app-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: #fff;
+}

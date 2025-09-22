@@ -1,0 +1,64 @@
+/* ===== Task Card Flip Effect ===== */
+.task-card {
+  perspective: 1200px; /* stronger 3D effect */
+  width: 300px;
+  height: 220px;
+  margin: 20px;
+}
+
+.task-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.7s ease-in-out;
+  transform-style: preserve-3d;
+  border-radius: 12px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+}
+
+.task-card:hover .task-card-inner {
+  transform: rotateY(180deg); /* flip on hover */
+}
+
+/* Front & Back Faces */
+.task-card-front,
+.task-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: box-shadow 0.3s ease;
+}
+
+.task-card-front:hover,
+.task-card-back:hover {
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+}
+
+/* Back Face Styling */
+.task-card-back {
+  transform: rotateY(180deg);
+  background: linear-gradient(135deg, #4a90e2, #357abd);
+  color: #fff;
+  text-align: center;
+}
+
+/* Optional Title & Text */
+.task-card h3 {
+  margin-bottom: 10px;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.task-card p {
+  font-size: 14px;
+  line-height: 1.5;
+}
