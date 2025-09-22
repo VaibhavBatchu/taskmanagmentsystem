@@ -10,7 +10,7 @@ pipeline {
     environment {
         BACKEND_DIR = 'BACKEND'
         FRONTEND_DIR = 'FRONTEND'
-        GIT_REPO = 'https://github.com/yourusername/TASKMANAGMENTSYSTEM.git'  // Replace with your repo URL
+        GIT_REPO = 'https://github.com/VaibhavBatchu/taskmanagmentsystem.git'  // Replace with your repo URL
 
         TOMCAT_URL = 'http://184.72.122.226:9090/manager/text'
         TOMCAT_CREDENTIALS = credentials('tomcat-creds')  // Uses your stored creds
